@@ -1,0 +1,31 @@
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: nginx-propagation
+  namespace: default
+spec:
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: nginx
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - mdr4
+        - mdr5
+---
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: nginx-service-propagation
+  namespace: default
+spec:
+  resourceSelectors:
+    - apiVersion: v1
+      kind: Service
+      name: nginx-nodeport
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - mdr4
+        - mdr5
